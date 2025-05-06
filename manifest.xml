@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:type="TaskPaneApp">
+  <Id>32c2a4c5-2450-4c02-a12a-9b8b229c3142</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Your Company</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Save Email to Project"/>
+  <Description DefaultValue="Save emails to a project and create tasks."/>
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+  <Requirements>
+    <Sets DefaultMinVersion="1.1">
+      <Set Name="Mailbox"/>
+    </Sets>
+  </Requirements>
+  <Resources>
+    <bt:Url id="taskpaneUrl" DefaultValue="https://outlook-addin-gamma.vercel.app/taskpane.html"/>
+  </Resources>
+  <ExtensionPoint xsi:type="MessageReadCommandSurface">
+    <OfficeCommand>
+      <Id>msgCommand</Id>
+      <Label resid="DisplayName"/>
+      <Action xsi:type="ShowTaskpane">
+        <SourceLocation resid="taskpaneUrl"/>
+      </Action>
+    </OfficeCommand>
+  </ExtensionPoint>
+</OfficeApp>

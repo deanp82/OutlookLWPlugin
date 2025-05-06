@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Save Email to Project</title>
+  <script src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+  <script src="taskpane.js"></script>
+</head>
+<body>
+  <h3>Save Email to Project</h3>
+  <select id="projectList"></select>
+  <button onclick="saveEmail()">Save Email</button>
+  <h4>Create Follow-up Task</h4>
+  <input type="email" id="taskEmail" placeholder="Person/Email" /><br>
+  <input type="text" id="taskDesc" placeholder="Task Description" /><br>
+  <textarea id="taskNotes" placeholder="Task Notes"></textarea><br>
+  <input type="date" id="deadlineDate" /><br>
+  <label><input type="checkbox" id="setReminder"> Set Reminder</label><br>
+  <label><input type="checkbox" id="addToOutlook"> Add to Outlook</label><br>
+  <button onclick="createTask()">Create Task</button>
+</body>
+</html>
