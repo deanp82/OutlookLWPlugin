@@ -17,7 +17,7 @@
     </Sets>
   </Requirements>
   <Resources>
-    <bt:Url id="taskpaneUrl" DefaultValue="https://outlook-addin-gamma.vercel.app/taskpane.html"/>
+    <bt:Url id="taskpaneUrl" DefaultValue="https://outlook-lw-plugin.vercel.app/taskpane.html"/>
   </Resources>
   <ExtensionPoint xsi:type="MessageReadCommandSurface">
     <OfficeCommand>
