@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Save Email to Project</title>
   <script src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
-  <script src="taskpane.js"></script>
+  <script src="taskpane.js" defer></script>
+  <style>
+    body { font-family: sans-serif; padding: 10px; max-width: 400px; }
+    input, select, textarea, button { margin: 5px 0; width: 100%; box-sizing: border-box; }
+  </style>
 </head>
 <body>
   <h3>Save Email to Project</h3>
@@ -20,5 +24,9 @@
   <label><input type="checkbox" id="setReminder"> Set Reminder</label><br>
   <label><input type="checkbox" id="addToOutlook"> Add to Outlook</label><br>
   <button onclick="createTask()">Create Task</button>
+
+  <noscript>
+    <p>This add-in requires JavaScript and Office to run.</p>
+  </noscript>
 </body>
 </html>
