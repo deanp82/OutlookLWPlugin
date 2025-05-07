@@ -3,8 +3,24 @@ Office.initialize = function (reason) {
 };
 
 Office.onReady(() => {
-  const subject = Office.context.mailbox.item.subject;
-  fetchProjects(subject);
+  const item = Office.context.mailbox.item;
+
+  if (item.itemType === Office.MailboxEnums.ItemType.Message) {
+    if (item.subject && typeof item.subject.getAsync === 'function') {
+      // Compose mode
+      item.subject.getAsync((result) => {
+        if (result.status === Office.AsyncResultStatus.Succeeded) {
+          fetchProjects(result.value);
+        } else {
+          console.error('Failed to get subject:', result.error.message);
+          fetchProjects(''); // Fallback if subject retrieval fails
+        }
+      });
+    } else {
+      // Read mode
+      fetchProjects(item.subject);
+    }
+  }
 });
 
 // ✅ GLOBAL FUNCTIONS
