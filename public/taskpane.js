@@ -1,6 +1,14 @@
 Office.initialize = function (reason) {
   console.log("Office initialized: " + reason);
-  
+};
+
+Office.onReady(() => {
+  const subject = Office.context.mailbox.item.subject;
+  fetchProjects(subject);
+});
+
+// ✅ GLOBAL FUNCTIONS
+
 async function getBody() {
   return new Promise(resolve =>
     Office.context.mailbox.item.body.getAsync("text", r => resolve(r.value))
@@ -22,40 +30,49 @@ async function fetchProjects(subject) {
     opt.dataset.folder2 = p.FolderAddress2 || '';
     list.appendChild(opt);
 
-    const score = (subject||'').toLowerCase().includes((p.name||'').toLowerCase())
-      ? (p.name||'').length
+    const score = (subject || '').toLowerCase().includes((p.name || '').toLowerCase())
+      ? (p.name || '').length
       : 0;
-    if (score > bestScore) { bestScore = score; bestId = p.id; }
+    if (score > bestScore) {
+      bestScore = score;
+      bestId = p.id;
+    }
   });
   if (bestId) list.value = bestId;
 }
 
-Office.onReady(() => {
-  fetchProjects(Office.context.mailbox.item.subject);
-});
-
 async function saveEmail() {
   const item = Office.context.mailbox.item;
   const data = {
-    emailData: { subject: item.subject, from: item.from.emailAddress, body: await getBody() },
+    emailData: {
+      subject: item.subject,
+      from: item.from.emailAddress,
+      body: await getBody()
+    },
     projectId: document.getElementById('projectList').value
   };
+
   const r = await fetch('/api/save-email', {
-    method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data)
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
   });
+
   alert(r.ok ? 'Email saved.' : await r.text());
 }
 
 async function createTask() {
-  const form = ['taskEmail','taskDesc','taskNotes','deadlineDate','setReminder','addToOutlook']
-    .reduce((obj,id) => {
+  const form = ['taskEmail', 'taskDesc', 'taskNotes', 'deadlineDate', 'setReminder', 'addToOutlook']
+    .reduce((obj, id) => {
       const el = document.getElementById(id);
-      obj[id] = el.type==='checkbox'?el.checked:el.value;
+      obj[id] = el.type === 'checkbox' ? el.checked : el.value;
       return obj;
     }, {});
   form.projectId = document.getElementById('projectList').value;
+
   await fetch('/api/create-task', {
-    method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(form)
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(form)
   });
 }
-};
