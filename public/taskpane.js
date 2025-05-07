@@ -1,3 +1,6 @@
+Office.initialize = function (reason) {
+  console.log("Office initialized: " + reason);
+  
 async function getBody() {
   return new Promise(resolve =>
     Office.context.mailbox.item.body.getAsync("text", r => resolve(r.value))
@@ -55,3 +58,4 @@ async function createTask() {
     method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(form)
   });
 }
+};
