@@ -38,10 +38,18 @@ async function fetchProjects(subject) {
   list.innerHTML = '';
 
   let bestId = null, bestScore = 0;
+
+  // Sort projects alphabetically by formatted display text
+  projects.sort((a, b) => {
+    const textA = `(${a.id} - ${a.name || 'Project ' + a.id})`.toLowerCase();
+    const textB = `(${b.id} - ${b.name || 'Project ' + b.id})`.toLowerCase();
+    return textA.localeCompare(textB);
+  });
+
   projects.forEach(p => {
     const opt = document.createElement('option');
     opt.value = p.id;
-    opt.text = p.name || `Project ${p.id}`;
+    opt.text = `(${p.id} - ${p.name || 'Project ' + p.id})`;
     opt.dataset.folder1 = p.FolderAddress1 || '';
     opt.dataset.folder2 = p.FolderAddress2 || '';
     list.appendChild(opt);
@@ -54,6 +62,7 @@ async function fetchProjects(subject) {
       bestId = p.id;
     }
   });
+
   if (bestId) list.value = bestId;
 }
 
