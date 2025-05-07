@@ -67,6 +67,7 @@ async function fetchProjects(subject) {
 }
 
 async function saveEmail() {
+  console.log("Save Email button clicked");
   const item = Office.context.mailbox.item;
   const data = {
     emailData: {
@@ -83,10 +84,13 @@ async function saveEmail() {
     body: JSON.stringify(data)
   });
 
-  alert(r.ok ? 'Email saved.' : await r.text());
+  const text = await r.text();
+  console.log('API response:', text);
+  alert(r.ok ? 'Email saved.' : text);
 }
 
 async function createTask() {
+  console.log("Create Task button clicked");
   const form = ['taskEmail', 'taskDesc', 'taskNotes', 'deadlineDate', 'setReminder', 'addToOutlook']
     .reduce((obj, id) => {
       const el = document.getElementById(id);
@@ -100,4 +104,8 @@ async function createTask() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(form)
   });
+
+  const text = await r.text();
+  console.log('API response:', text);
+  alert(r.ok ? 'Task created.' : text);
 }
