@@ -2,13 +2,12 @@
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
-           xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
            xsi:type="MailApp">
 
   <Id>32c2a4c5-2450-4c02-a12a-9b8b229c3142</Id>
   <Version>1.0.0.1</Version>
   <ProviderName>London Wall</ProviderName>
-  <DefaultLocale>en-GB</DefaultLocale>
+  <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Save Email to Project"/>
   <Description DefaultValue="Save emails to a project and create tasks."/>
   <IconUrl DefaultValue="https://outlook-lw-plugin.vercel.app/assets/icon-32.png"/>
@@ -20,8 +19,8 @@
   </Hosts>
 
   <Requirements>
-    <Sets DefaultMinVersion="1.5">
-      <Set Name="Mailbox"/>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.5"/>
     </Sets>
   </Requirements>
 
@@ -40,14 +39,64 @@
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
   </Rule>
-
-<VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides"
-                  xsi:type="VersionOverridesV1_0">
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
     <Requirements>
       <bt:Sets DefaultMinVersion="1.5">
         <bt:Set Name="Mailbox"/>
       </bt:Sets>
     </Requirements>
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="msgReadGroup">
+                <Label resid="groupLabel"/>
+                <Control xsi:type="Button" id="msgReadOpenPaneButton">
+                  <Label resid="paneReadButtonLabel"/>
+                  <Supertip>
+                    <Title resid="paneReadSuperTipTitle"/>
+                    <Description resid="paneReadSuperTipDescription"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="icon16"/>
+                    <bt:Image size="32" resid="icon32"/>
+                    <bt:Image size="80" resid="icon80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="taskpaneUrl"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+
+          <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="msgComposeGroup">
+                <Label resid="groupLabel"/>
+                <Control xsi:type="Button" id="msgComposeOpenPaneButton">
+                  <Label resid="paneReadButtonLabel"/>
+                  <Supertip>
+                    <Title resid="paneReadSuperTipTitle"/>
+                    <Description resid="paneReadSuperTipDescription"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="icon16"/>
+                    <bt:Image size="32" resid="icon32"/>
+                    <bt:Image size="80" resid="icon80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="taskpaneUrl"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
     <Resources>
       <bt:Images>
         <bt:Image id="icon16" DefaultValue="https://outlook-lw-plugin.vercel.app/assets/icon-16.png"/>
@@ -66,11 +115,14 @@
         <bt:String id="paneReadSuperTipDescription" DefaultValue="Save emails to a project and create tasks."/>
       </bt:LongStrings>
     </Resources>
-    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
-                      xsi:type="VersionOverridesV1_1">
-    <Hosts>
-      <Host xsi:type="MailHost">
-
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
+      <Requirements>
+        <bt:Sets DefaultMinVersion="1.5">
+          <bt:Set Name="Mailbox"/>
+        </bt:Sets>
+      </Requirements>
+      <Hosts>
+        <Host xsi:type="MailHost">
         <DesktopFormFactor>
           <ExtensionPoint xsi:type="MessageReadCommandSurface">
             <OfficeTab id="TabDefault">
@@ -120,9 +172,12 @@
             </OfficeTab>
           </ExtensionPoint>
         </DesktopFormFactor>
-
-      </Host>
-    </Hosts>
-    </VersionOverrides>
+        </Host>
+      </Hosts>
+      <Resources>
+        <!-- add information on resources -->
+      </Resources>
+    </VersionOverrides>  
   </VersionOverrides>
 </OfficeApp>
+
