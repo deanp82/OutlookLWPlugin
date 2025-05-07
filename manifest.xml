@@ -1,31 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:type="TaskPaneApp">
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+           xsi:type="MailApp">
+
   <Id>32c2a4c5-2450-4c02-a12a-9b8b229c3142</Id>
-  <Version>1.0.0.0</Version>
-  <ProviderName>Your Company</ProviderName>
-  <DefaultLocale>en-US</DefaultLocale>
+  <Version>1.0.0.1</Version>
+  <ProviderName>London Wall</ProviderName>
+  <DefaultLocale>en-GB</DefaultLocale>
   <DisplayName DefaultValue="Save Email to Project"/>
   <Description DefaultValue="Save emails to a project and create tasks."/>
+  <IconUrl DefaultValue="https://outlook-lw-plugin.vercel.app/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://outlook-lw-plugin.vercel.app/assets/icon-128.png"/>
+  <SupportUrl DefaultValue="https://outlook-lw-plugin.vercel.app/support"/>
+
   <Hosts>
     <Host Name="Mailbox"/>
   </Hosts>
+
   <Requirements>
-    <Sets DefaultMinVersion="1.1">
+    <Sets DefaultMinVersion="1.5">
       <Set Name="Mailbox"/>
     </Sets>
   </Requirements>
-  <Resources>
+
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://outlook-lw-plugin.vercel.app/taskpane.html"/>
+        <RequestedHeight>250</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <Permissions>ReadWriteItem</Permissions>
+
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+  </Rule>
+
+<VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides"
+                  xsi:type="VersionOverridesV1_0">
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.5">
+        <bt:Set Name="Mailbox"/>
+      </bt:Sets>
+    </Requirements>
+<Resources>
+  <bt:Images>
+    <bt:Image id="icon16" DefaultValue="https://outlook-lw-plugin.vercel.app/assets/icon-16.png"/>
+    <bt:Image id="icon32" DefaultValue="https://outlook-lw-plugin.vercel.app/assets/icon-32.png"/>
+    <bt:Image id="icon80" DefaultValue="https://outlook-lw-plugin.vercel.app/assets/icon-80.png"/>
+  </bt:Images>
+  <bt:Urls>
     <bt:Url id="taskpaneUrl" DefaultValue="https://outlook-lw-plugin.vercel.app/taskpane.html"/>
-  </Resources>
-  <ExtensionPoint xsi:type="MessageReadCommandSurface">
-    <OfficeCommand>
-      <Id>msgCommand</Id>
-      <Label resid="DisplayName"/>
-      <Action xsi:type="ShowTaskpane">
-        <SourceLocation resid="taskpaneUrl"/>
-      </Action>
-    </OfficeCommand>
-  </ExtensionPoint>
+  </bt:Urls>
+  <bt:ShortStrings>
+    <bt:String id="groupLabel" DefaultValue="Save Email"/>
+    <bt:String id="paneReadButtonLabel" DefaultValue="Open Task Pane"/>
+    <bt:String id="paneReadSuperTipTitle" DefaultValue="Save Email to Project"/>
+  </bt:ShortStrings>
+  <bt:LongStrings>
+    <bt:String id="paneReadSuperTipDescription" DefaultValue="Save emails to a project and create tasks."/>
+  </bt:LongStrings>
+</Resources>
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
+                      xsi:type="VersionOverridesV1_1">
+          <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+<ExtensionPoint xsi:type="MessageReadCommandSurface">
+  <OfficeTab id="TabDefault">
+    <Group id="msgReadGroup">
+      <Label resid="groupLabel"/>
+      <Control xsi:type="Button" id="msgReadOpenPaneButton">
+        <Label resid="paneReadButtonLabel"/>
+        <Supertip>
+          <Title resid="paneReadSuperTipTitle"/>
+          <Description resid="paneReadSuperTipDescription"/>
+        </Supertip>
+        <Icon>
+          <bt:Image size="16" resid="icon16"/>
+          <bt:Image size="32" resid="icon32"/>
+          <bt:Image size="80" resid="icon80"/>
+        </Icon>
+        <Action xsi:type="ShowTaskpane">
+          <SourceLocation resid="taskpaneUrl"/>
+          <SupportsPinning>true</SupportsPinning>
+        </Action>
+      </Control>
+    </Group>
+  </OfficeTab>
+</ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    </VersionOverrides>
+  </VersionOverrides>
 </OfficeApp>
